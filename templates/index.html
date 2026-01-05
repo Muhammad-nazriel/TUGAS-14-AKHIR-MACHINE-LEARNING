@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Automotive Fraud Detection System</title>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: Arial, sans-serif;
+            color: #eee;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 750px;
+            margin: 60px auto;
+            background: #121212;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0,255,200,0.25);
+        }
+
+        h1 {
+            text-align: center;
+            color: #00e676;
+        }
+
+        .info {
+            background: #1e1e1e;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        textarea {
+            width: 100%;
+            height: 130px;
+            background: #222;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            background: #00e676;
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #00c853;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .fraud {
+            background: #b71c1c;
+        }
+
+        .normal {
+            background: #1b5e20;
+        }
+
+        .error {
+            background: #f57c00;
+            color: #000;
+        }
+
+        footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 13px;
+            color: #aaa;
+        }
+    </style>
+
+    <script>
+        function isiContoh() {
+            document.getElementById("features").value =
+            "0,-1.359807,-0.072781,2.536347,1.378155,-0.338321,0.462388,0.239599,0.098698,0.363787,0.090794,-0.551600,-0.617801,-0.991390,-0.311169,1.468177,-0.470401,0.207971,0.025791,0.403993,0.251412,-0.018307,0.277838,-0.110474,0.066928,0.128539,-0.189115,0.133558,-0.021053,149.62";
+        }
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <h1>🚗 Automotive Transaction Fraud Detection</h1>
+
+    <div class="info">
+        <b>Cara Menggunakan Aplikasi:</b>
+        <ol>
+            <li>Klik tombol <b>"Isi Contoh Data Otomatis"</b></li>
+            <li>Data akan terisi otomatis dari dataset Kaggle</li>
+            <li>Klik <b>Analisis Transaksi</b></li>
+        </ol>
+
+        <p>
+            <b>Catatan:</b> Dataset menggunakan fitur hasil <i>Principal Component Analysis (PCA)</i>,
+            sehingga pengguna tidak perlu memahami setiap fitur secara detail.
+        </p>
+    </div>
+
+    <form method="POST">
+        <textarea id="features" name="features"
+        placeholder="Klik tombol di bawah untuk mengisi contoh data..."></textarea>
+
+        <button type="button" onclick="isiContoh()">📋 Isi Contoh Data Otomatis</button>
+        <button type="submit">🔍 Analisis Transaksi</button>
+    </form>
+
+    {% if error %}
+    <div class="result error">⚠️ {{ error }}</div>
+    {% endif %}
+
+    {% if prediction is not none %}
+        {% if prediction == 1 %}
+        <div class="result fraud">🚨 TRANSAKSI TERINDIKASI FRAUD</div>
+        {% else %}
+        <div class="result normal">✅ TRANSAKSI AMAN</div>
+        {% endif %}
+    {% endif %}
+
+    <footer>
+        Model XGBoost • Dataset Kaggle • TA-14 Machine Learning
+    </footer>
+</div>
+</body>
+</html>
